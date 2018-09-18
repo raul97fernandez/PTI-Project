@@ -6,4 +6,4 @@ Portal Web/Plataforma donde se pueden intercambiar diferentes herramientas para 
 
 
 Links de interés: 
-https://blog.cloudflare.com/distributed-web-gateway/ (explica muy bien el concepto y hay imágenes que pienso robar para la presentación lol - maloik)
+https://blog.cloudflare.com/distributed-web-gateway/ (explica muy bien el concepto de IPFS y hay imágenes que pienso robar para la presentación lol - maloik)
