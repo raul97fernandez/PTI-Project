@@ -7,6 +7,7 @@ import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
 import './App.css'
+import './css/bootstrap.min.css'
 
 class App extends Component {
   constructor(props) {
@@ -96,25 +97,61 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <nav className="navbar pure-menu pure-menu-horizontal">
-          <a href="#" className="pure-menu-heading pure-menu-link">IPFS File Upload DApp</a>
-        </nav>
+        
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a className="navbar-brand" href="#">EZShare</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-        <main className="container">
-          <div className="pure-g">
-            <div className="pure-u-1-1">
-              <h1>Your Image</h1>
+        <div className="collapse navbar-collapse" id="navbarColor01">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <a className="nav-link" href="#">Upload <span className="sr-only">(current)</span></a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Download</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">My Files</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Search</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Settings</a>
+            </li>
+          </ul>
+          <ul className="nav navbar-nav navbar-right">
+              <li><a href="#">Hi (User)!</a></li>
+          </ul>
+        </div>
+      </nav>
+
+       <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <h1>Your File</h1>
               <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
+
               <img src={`https://ipfs.io/ipfs/${this.state.ipfsHash}`} alt=""/>
-              <h2>Upload Image</h2>
+              <h2>Upload File</h2>
+
               <form onSubmit={this.onSubmit} >
-                <input type='file' onChange={this.captureFile} />
-                <input type='submit' />
+                <div className="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <input type="file" class="form-control-file" id="exampleInputFile" onChange={this.captureFile}  aria-describedby="fileHelp"/>
+                </div>
+                <button className="btn btn-primary" type='submit'>Submit</button>
               </form>
+             
+             </div>
             </div>
           </div>
-        </main>
+        
       </div>
+
+
     );
   }
 }
