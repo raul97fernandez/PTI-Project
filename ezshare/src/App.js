@@ -84,7 +84,6 @@ class App extends Component {
         if(error) {
         console.error(error)
         return
-<<<<<<< Updated upstream
       }
       this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((result) => {
         return this.simpleStorageInstance.get.call(this.state.account)
@@ -92,11 +91,6 @@ class App extends Component {
         this.setState({ ipfsHash })
         console.log('ipfshash', this.state.ipfsHash)
       })
-=======
-        }
-        this.setState({ ipfsHash: result[0].hash })
-        console.log('ipfshash', this.state.ipfsHash)
->>>>>>> Stashed changes
     })
   }
 
