@@ -14,10 +14,10 @@ class App extends Component {
     super(props)
 
     this.state = {
-      ipfsHash: '',
-      web3: null,
-      buffer: null,
-      account: null
+        ipfsHash: '',
+        web3: null,
+        buffer: null,
+        account: null
     }
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -73,17 +73,18 @@ class App extends Component {
     const reader = new window.FileReader()
     reader.readAsArrayBuffer(file)
     reader.onloadend = () => {
-      this.setState({ buffer: Buffer(reader.result) })
-      console.log('buffer', this.state.buffer)
+        this.setState({ buffer: Buffer(reader.result) })
+        console.log('buffer', this.state.buffer)
     }
   }
 
   onSubmit(event) {
     event.preventDefault()
     ipfs.files.add(this.state.buffer, (error, result) => {
-      if(error) {
+        if(error) {
         console.error(error)
         return
+<<<<<<< Updated upstream
       }
       this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((result) => {
         return this.simpleStorageInstance.get.call(this.state.account)
@@ -91,6 +92,11 @@ class App extends Component {
         this.setState({ ipfsHash })
         console.log('ipfshash', this.state.ipfsHash)
       })
+=======
+        }
+        this.setState({ ipfsHash: result[0].hash })
+        console.log('ipfshash', this.state.ipfsHash)
+>>>>>>> Stashed changes
     })
   }
 

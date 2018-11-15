@@ -1,4 +1,6 @@
 .gitignore
-ezshare/node_modules
-ezshare/build
-ezshare/test
+ezshare/node_modules/
+ezshare/build/
+ezshare/test/
+matias/
+*.log
