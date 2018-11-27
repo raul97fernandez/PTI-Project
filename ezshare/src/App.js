@@ -3,11 +3,11 @@ import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
 
-import './css/oswald.css'
-import './css/open-sans.css'
-import './css/pure-min.css'
-import './App.css'
+//import './css/oswald.css'
+//import './css/open-sans.css'
+//import './App.css'
 import './css/bootstrap.min.css'
+import './css/navbar.css'
 
 class App extends Component {
   constructor(props) {
@@ -94,6 +94,59 @@ class App extends Component {
     })
   }
 
+
+  render(){
+    return (
+    
+   <div className="App">
+
+  <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EZShare</a>
+      <input className="form-control w-100" type="text" placeholder="Search" aria-label="Search"/>
+      <ul className="navbar-nav px-3">
+        <li className="nav-item text-nowrap">
+          <button className="btn btn-alert ">Search</button>
+        </li>
+      </ul>
+      <ul className="navbar-nav px-3">
+        <li className="nav-item text-nowrap">
+          <a className="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+  <div className="container-fluid">
+    <div className="row">
+      <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+        <div className="sidebar-sticky">
+        
+          <ul className="nav flex-column">
+          <li className="nav-item">
+              <a className="nav-link active" href="#">
+                <button className="btn btn-dark btn-sm">+ Upload</button>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active" href="#">
+                <span data-feather="home"></span>
+                My Files <span className="sr-only">(current)</span>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                <span data-feather="file"></span>
+                People
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      </div>
+    </div>
+    </div>
+      );
+    }
+/*
   render() {
     return (
       <div className="App">
@@ -140,7 +193,7 @@ class App extends Component {
               <form onSubmit={this.onSubmit} >
                 <div className="form-group">
                   <label for="exampleInputFile">File input</label>
-                  <input type="file" class="form-control-file" id="exampleInputFile" onChange={this.captureFile}  aria-describedby="fileHelp"/>
+                  <input type="file" className="form-control-file" id="exampleInputFile" onChange={this.captureFile}  aria-describedby="fileHelp"/>
                 </div>
                 <button className="btn btn-primary" type='submit'>Submit</button>
               </form>
@@ -152,8 +205,8 @@ class App extends Component {
       </div>
 
 
-    );
-  }
+    )
+  }*/
 }
 
 export default App
