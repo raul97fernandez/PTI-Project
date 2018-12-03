@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
+import SimpleStorageContract from './Hashes.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
 
@@ -21,6 +21,7 @@ class App extends Component {
         }
         this.captureFile = this.captureFile.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onLogin = this.onLogin.bind(this);
     }
 
     componentWillMount() {
@@ -59,7 +60,7 @@ class App extends Component {
             this.simpleStorageInstance = instance
             this.setState({ account: accounts[0] })
             // Get the value from the contract to prove it worked.
-            return this.simpleStorageInstance.get.call(accounts[0])
+            //return this.simpleStorageInstance.get.call(accounts[0])
         }).then((ipfsHash) => {
             // Update state with the result.
             return this.setState({ ipfsHash })
@@ -78,7 +79,8 @@ class App extends Component {
         }
     }
 
-    onSubmit(event) {
+    //OLD SUBMIT
+    /*onSubmit(event) {
         event.preventDefault()
         ipfs.files.add(this.state.buffer, (error, result) => {
             if (error) {
@@ -92,7 +94,20 @@ class App extends Component {
                 console.log('ipfshash', this.state.ipfsHash)
             })
         })
-  }
+    }*/
+
+    onSubmit(event) {
+      event.preventDefault()
+      var t = this.simpleStorageInstance.addFile('983umskjdsfh892hfy89hf8d9sh', { from: this.state.account })
+      console.log(t)
+    }
+  
+    onLogin(event) {
+      event.preventDefault()
+      this.simpleStorageInstance.userEnrollment('alberto', 'xd', { from: this.state.account })
+      this.simpleStorageInstance.login('xd', { from: this.state.account })
+      this.simpleStorageInstance.getMyUserName().then((result) => {console.log(result)})
+    }
 
     render() {
         return (
@@ -131,6 +146,13 @@ class App extends Component {
         <div className="container">
             <div className="row">
                 <div className="col-12">
+
+              <form onSubmit={this.onLogin} >
+                <button className="btn btn-primary" type='submit'>Login hardcoded</button>
+              </form>
+
+              <hr></hr>
+
                 <h1>Your File</h1>
                 <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
 
