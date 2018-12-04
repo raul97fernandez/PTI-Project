@@ -98,8 +98,28 @@ class App extends Component {
 
     onSubmit(event) {
       event.preventDefault()
-      var t = this.simpleStorageInstance.addFile('983umskjdsfh892hfy89hf8d9sh', { from: this.state.account })
-      console.log(t)
+
+      /* IPFS ADDS FILE */
+      ipfs.files.add(this.state.buffer, (error, result) => {
+        if (error) {
+            console.error(error)
+            return
+        }
+        this.simpleStorageInstance.addFile(result[0].hash, { from: this.state.account }).then(function(result) {
+            alert('IPFS add succesfull');
+          }).catch(function(err) {
+            console.log(err.message);
+          });
+    })
+
+      /* IPFS HASH ADDED TO BLOCKCHAIN */
+      /*this.simpleStorageInstance.addFile('983umskjdsfh892hfy89hf8d9sh', { from: this.state.account }).then(function(result) {
+        alert('Transfer Successful!');
+      }).catch(function(err) {
+        console.log(err.message);
+      });*/
+
+      this.simpleStorageInstance.getFilesFromUser().then((result) => {console.log(result)})
     }
   
     onLogin(event) {
