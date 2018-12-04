@@ -123,7 +123,13 @@ class App extends Component {
           <ul className="nav flex-column">
           <li className="nav-item">
               <a className="nav-link active" href="#">
-                <button className="btn btn-dark btn-sm">+ Upload</button>
+                <form onSubmit={this.onSubmit} >
+                  <div className="form-group">
+                  <label for="exampleInputFile"> File input</label>
+                  <input type="file" class="form-control-file" id="exampleInputFile" onChange={this.captureFile} aria-describedby="fileHelp"/>
+                  </div>
+                  <button className="btn btn-dark btn-sm">+ Upload</button>
+                </form>
               </a>
             </li>
             <li className="nav-item">
