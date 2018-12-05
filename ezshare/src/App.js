@@ -21,6 +21,8 @@ class App extends Component {
     }
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onLogin = this.onLogin.bind(this);
+    this.logged = false
   }
 
   componentWillMount() {
@@ -96,61 +98,88 @@ class App extends Component {
 
 
   render(){
-    return (
     
-   <div className="App">
-
-  <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EZShare</a>
-      <input className="form-control w-100" type="text" placeholder="Search" aria-label="Search"/>
-      <ul className="navbar-nav px-3">
-        <li className="nav-item text-nowrap">
-          <button className="btn btn-alert ">Search</button>
-        </li>
-      </ul>
-      <ul className="navbar-nav px-3">
-        <li className="nav-item text-nowrap">
-          <a className="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
-    </nav>
-
-  <div className="container-fluid">
-    <div className="row">
-      <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-        <div className="sidebar-sticky">
+    if (this.logged) {
+        return (
         
-          <ul className="nav flex-column">
-          <li className="nav-item">
-              <a className="nav-link active" href="#">
-                <form onSubmit={this.onSubmit} >
-                  <div className="form-group">
-                  <label for="exampleInputFile"> File input</label>
-                  <input type="file" class="form-control-file" id="exampleInputFile" onChange={this.captureFile} aria-describedby="fileHelp"/>
-                  </div>
-                  <button className="btn btn-dark btn-sm">+ Upload</button>
-                </form>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link active" href="#">
-                <span data-feather="home"></span>
-                My Files <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                <span data-feather="file"></span>
-                People
-              </a>
+       <div className="App">
+    
+      <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+          <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EZShare</a>
+          <input className="form-control w-100" type="text" placeholder="Search" aria-label="Search"/>
+          <ul className="navbar-nav px-3">
+            <li className="nav-item text-nowrap">
+              <button className="btn btn-alert ">Search</button>
             </li>
           </ul>
+          <ul className="navbar-nav px-3">
+            <li className="nav-item text-nowrap">
+              <a className="nav-link" href="#">Sign out</a>
+            </li>
+          </ul>
+        </nav>
+    
+      <div className="container-fluid">
+        <div className="row">
+          <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+            <div className="sidebar-sticky">
+            
+              <ul className="nav flex-column">
+              <li className="nav-item">
+                  <a className="nav-link active" href="#">
+                    <form onSubmit={this.onSubmit} >
+                      <div className="form-group">
+                      <label for="exampleInputFile"> File input</label>
+                      <input type="file" className"form-control-file" id="exampleInputFile" onChange={this.captureFile} aria-describedby="fileHelp"/>
+                      </div>
+                      <button className="btn btn-dark btn-sm">+ Upload</button>
+                    </form>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="#">
+                    <span data-feather="home"></span>
+                    My Files <span className="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <span data-feather="file"></span>
+                    People
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          </div>
         </div>
-      </nav>
-      </div>
-    </div>
-    </div>
-      );
+        </div>
+          );
+    }
+
+    else {
+        return {
+            <div className="App">
+            <form className"form-signin">
+             <img className"mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+             <h1 className"h3 mb-3 font-weight-normal">Please sign in</h1>
+             <label for="inputEmail" className"sr-only">Email address</label>
+             <input type="email" id="inputEmail" className"form-control" placeholder="Email address" required="" autofocus="">
+             <label for="inputPassword" className"sr-only">Password</label>
+             <input type="password" id="inputPassword" className"form-control" placeholder="Password" required="">
+             <div className"checkbox mb-3">
+               <label>
+                 <input type="checkbox" value="remember-me"> Remember me
+               </label>
+             </div>
+             <button className"btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+             <p className"mt-5 mb-3 text-muted">© 2017-2018</p>
+           </form>
+           </div>
+        
+    }
+
+    }
     }
 /*
   render() {
