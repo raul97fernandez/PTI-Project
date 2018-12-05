@@ -1,4 +1,5 @@
 pragma solidity 0.4.24;
+pragma experimental ABIEncoderV2;
 
 import "./Strings.sol";
 
@@ -22,10 +23,10 @@ contract Hashes {
   // @dev Hashes.deployed().then(function(instance){return instance.userEnrollment('raul', 'xd')})
   function userEnrollment(string _user, string passwd) public {
     //Comprovar que no existeixi un user amb aquesta adreça ni amb aquest nom
-    //require(addressToUser_[msg.sender].name == '');
+    require(keccak256(addressToUser_[msg.sender].name) == keccak256(""));
 
     for (uint i = 0; i < users_.length; ++i) {
-      //require(_user != users_[i].name);
+      require(keccak256(_user) != keccak256(users_[i].name));
     }
 
     string[] memory files;
@@ -51,11 +52,9 @@ contract Hashes {
   // @dev Hashes.deployed().then(function(instance) { return instance.getMyUserName() } )
   function getMyUserName() public view returns (string) {
     string memory username = addressToUser_[msg.sender].name;
-    /* if (username == "") {
+     if (keccak256(username) == keccak256("")) {
       return "";
-    } else {
-      return username;
-    } */
+    }
     return username;
   }
 
@@ -83,7 +82,7 @@ contract Hashes {
     User storage user = addressToUser_[msg.sender];
     // Per poder fer login l'usuari no ha d'estar loggejat
     require(!user.active);
-    //require(user.passwd == passwd);
+    require(keccak256(user.passwd) == keccak256(passwd));
     user.active = true;
   }
 
@@ -102,17 +101,18 @@ contract Hashes {
     require(userOwner.active);
     bool found = false;
     for (uint i = 0; i < userOwner.files.length; ++i) {
-      /* if (user.files[i] == _hash) {
+      if (keccak256(userOwner.files[i]) == keccak256(_hash)) {
         found = true;
-      } */
+      } 
     }
     // Per poder compartir un hash l'usuari ha de tenir el hash
     require(found);
     User storage user2Share = usernameToUser_[_userToShare];
+    require(keccak256(user2Share.name) != keccak256(""));
     user2Share.files.push(_hash);
     User storage user2 = addressToUser_[user2Share.account];
     // Per poder compartir un hash amb un usuari aquest ha d'existir
-    //require(user2.name != '');
+    require(keccak256(user2.name) != keccak256(""));
     user2.files.push(_hash);
   }
 
