@@ -14,6 +14,7 @@ class App extends Component {
     super(props)
 
     this.state = {
+        logged: false,
         ipfsHash: '',
         web3: null,
         buffer: null,
@@ -22,7 +23,6 @@ class App extends Component {
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onLogin = this.onLogin.bind(this);
-    this.logged = false
   }
 
   componentWillMount() {
@@ -96,10 +96,17 @@ class App extends Component {
     })
   }
 
+  onLogin(event) {
+    event.preventDefault()
+    logged = false
+    this.setState({ logged: false})
+  }
+
+
 
   render(){
     
-    if (this.logged) {
+    if (this.state.logged) {
         return (
         
        <div className="App">
@@ -130,7 +137,7 @@ class App extends Component {
                     <form onSubmit={this.onSubmit} >
                       <div className="form-group">
                       <label for="exampleInputFile"> File input</label>
-                      <input type="file" className"form-control-file" id="exampleInputFile" onChange={this.captureFile} aria-describedby="fileHelp"/>
+                      <input type="file" className="form-control-file" id="exampleInputFile" onChange={this.captureFile} aria-describedby="fileHelp"/>
                       </div>
                       <button className="btn btn-dark btn-sm">+ Upload</button>
                     </form>
@@ -158,26 +165,26 @@ class App extends Component {
     }
 
     else {
-        return {
+        return (
             <div className="App">
-            <form className"form-signin">
-             <img className"mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-             <h1 className"h3 mb-3 font-weight-normal">Please sign in</h1>
-             <label for="inputEmail" className"sr-only">Email address</label>
-             <input type="email" id="inputEmail" className"form-control" placeholder="Email address" required="" autofocus="">
-             <label for="inputPassword" className"sr-only">Password</label>
-             <input type="password" id="inputPassword" className"form-control" placeholder="Password" required="">
-             <div className"checkbox mb-3">
+            <form className="form-signin" onSubmit={this.onLogin}>
+             <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"/>
+             <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+             <label for="inputEmail" className="sr-only">Email address</label>
+             <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="" autofocus=""/>
+             <label for="inputPassword" className="sr-only">Password</label>
+             <input type="password" id="inputPassword" className="form-control" placeholder="Password" required=""/>
+             <div className="checkbox mb-3">
                <label>
-                 <input type="checkbox" value="remember-me"> Remember me
+                 <input type="checkbox" value="remember-me"/> Remember me
                </label>
              </div>
-             <button className"btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-             <p className"mt-5 mb-3 text-muted">© 2017-2018</p>
+             <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+             <p className="mt-5 mb-3 text-muted"/>
            </form>
            </div>
         
-    }
+        )
 
     }
     }
