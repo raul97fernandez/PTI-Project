@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SimpleStorageContract from './Hashes.json'
+import SimpleStorageContract from '../build/contracts/Hashes.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
 
@@ -15,6 +15,8 @@ class App extends Component {
 
     this.state = {
         logged: false,
+        username: '',
+        password: null,
         ipfsHash: '',
         web3: null,
         buffer: null,
@@ -23,6 +25,9 @@ class App extends Component {
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onLogin = this.onLogin.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
+  
   }
 
     componentWillMount() {
@@ -114,11 +119,53 @@ class App extends Component {
     })
   }
 
+onEnrollment(event) {
+  event.preventDefault()
+  this.simpleStorageInstance.userEnrollment('alberto', 'xd', { from: this.state.account })
+}
+
   onLogin(event) {
     event.preventDefault()
-    logged = false
-    this.setState({ logged: false})
+    this.simpleStorageInstance.userEnrollment(this.state.username, this.state.password, { from: this.state.account })
+    this.simpleStorageInstance.login(this.state.username, { from: this.state.account })
+   // this.simpleStorageInstance.getMyUserName().then((result) => {console.log(result)})
+    this.setState({ logged: true})
   }
+
+  handleUsernameChange(event) {
+    this.setState({username: event.target.value});
+  } 
+
+  handlePasswordChange(event) {
+    this.setState({password: event.target.value})
+  }
+  /*ALBERTO'S LOGIN
+  onLogin(event) {
+    event.preventDefault()
+    this.simpleStorageInstance.userEnrollment('alberto', 'xd', { from: this.state.account })
+    this.simpleStorageInstance.login('xd', { from: this.state.account })
+    this.simpleStorageInstance.getMyUserName().then((result) => {console.log(result)})
+  }*/
+
+  /* INTERNET LOGIN EXAMPLE 
+  handleEmailChange: function(e) {
+   this.setState({email: e.target.value});
+},
+handlePasswordChange: function(e) {
+   this.setState({password: e.target.value});
+},
+render : function() {
+      return (
+        <form>
+          <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
+          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
+          <button type="button" onClick={this.handleLogin}>Login</button>
+        </form>);
+},
+handleLogin: function() {
+    console.log("EMail: " + this.state.email);
+    console.log("Password: " + this.state.password);
+}*/
 
 
 
@@ -186,18 +233,21 @@ class App extends Component {
         return (
             <div className="App">
             <form className="form-signin" onSubmit={this.onLogin}>
-             <img className="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"/>
              <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-             <label for="inputEmail" className="sr-only">Email address</label>
-             <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="" autofocus=""/>
+             <label for="inputUsername" className="sr-only">Username</label>
+             <input type="username" id="inputUsername" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange} required="" autofocus=""/>
              <label for="inputPassword" className="sr-only">Password</label>
-             <input type="password" id="inputPassword" className="form-control" placeholder="Password" required=""/>
-             <div className="checkbox mb-3">
-               <label>
-                 <input type="checkbox" value="remember-me"/> Remember me
-               </label>
-             </div>
+             <input type="password" id="inputPassword" className="form-control" placeholder="Password"  value={this.state.password} onChange={this.handlePasswordChange} required=""/>
              <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+             <p className="mt-5 mb-3 text-muted"/>
+           </form>
+           <form>
+           <h1 className="h3 mb-3 font-weight-normal">Create a new user </h1>
+             <label for="newUsername" className="sr-only">Username</label>
+             <input type="text" id="newUsername" className="form-control" placeholder="Username" required="" autofocus=""/>
+             <label for="newPassword" className="sr-only">Password</label>
+             <input type="password" id="newPassword" className="form-control" placeholder="Password" required=""/>
+             <button className="btn btn-lg btn-primary btn-block" type="submit">Enroll me</button>
              <p className="mt-5 mb-3 text-muted"/>
            </form>
            </div>
