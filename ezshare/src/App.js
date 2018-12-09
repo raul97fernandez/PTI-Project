@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SimpleStorageContract from '../build/contracts/Hashes.json'
+import SimpleStorageContract from './Hashes.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
 
@@ -14,7 +14,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-        logged: false,
+        logged: true,
         username: '',
         password: null,
         ipfsHash: '',
@@ -65,6 +65,7 @@ class App extends Component {
         simpleStorage.deployed().then((instance) => {
             this.simpleStorageInstance = instance
             this.setState({ account: accounts[0] })
+            this.simpleStorageInstance.getFilesFromUser().then((result) => {console.log(result)})
             // Get the value from the contract to prove it worked.
             //return this.simpleStorageInstance.get.call(accounts[0])
         }).then((ipfsHash) => {
@@ -126,10 +127,16 @@ onEnrollment(event) {
 
   onLogin(event) {
     event.preventDefault()
-    this.simpleStorageInstance.userEnrollment(this.state.username, this.state.password, { from: this.state.account })
-    this.simpleStorageInstance.login(this.state.username, { from: this.state.account })
+    this.simpleStorageInstance.userEnrollment('alberto', 'xd', { from: this.state.account })
+    console.log(this.state.account)
+    this.simpleStorageInstance.login(this.state.password, { from: this.state.account }).then((result) => {
+      console.log(result); 
+      this.setState({ logged: true}) 
+    }).catch(function(err) {
+        console.log(err.message);
+      });
    // this.simpleStorageInstance.getMyUserName().then((result) => {console.log(result)})
-    this.setState({ logged: true})
+    this.simpleStorageInstance.getMyUserName().then((result) => {console.log(result)})
   }
 
   handleUsernameChange(event) {
@@ -241,7 +248,8 @@ handleLogin: function() {
              <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
              <p className="mt-5 mb-3 text-muted"/>
            </form>
-           <form>
+           
+           {/* <form onSubmit={this.onEnrollment}> 
            <h1 className="h3 mb-3 font-weight-normal">Create a new user </h1>
              <label for="newUsername" className="sr-only">Username</label>
              <input type="text" id="newUsername" className="form-control" placeholder="Username" required="" autofocus=""/>
@@ -249,7 +257,8 @@ handleLogin: function() {
              <input type="password" id="newPassword" className="form-control" placeholder="Password" required=""/>
              <button className="btn btn-lg btn-primary btn-block" type="submit">Enroll me</button>
              <p className="mt-5 mb-3 text-muted"/>
-           </form>
+           </form> */}
+           
            </div>
         
         )
