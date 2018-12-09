@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import SimpleStorageContract from './Hashes.json'
 import getWeb3 from './utils/getWeb3'
 import ipfs from './ipfs'
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from 'react-router-dom';
+import Home from './Home';
+import UploadFiles from './UploadFiles';
+import MyFiles from './MyFiles';
 
 //import './css/oswald.css'
 //import './css/open-sans.css'
@@ -15,8 +23,8 @@ class App extends Component {
 
     this.state = {
         logged: true,
-        username: '',
-        password: null,
+        username: 'Username',
+        password: '',
         ipfsHash: '',
         web3: null,
         buffer: null,
@@ -25,6 +33,7 @@ class App extends Component {
     this.captureFile = this.captureFile.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onLogin = this.onLogin.bind(this);
+    this.onEnrollment = this.onEnrollment.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
   
@@ -122,14 +131,20 @@ class App extends Component {
 
 onEnrollment(event) {
   event.preventDefault()
-  this.simpleStorageInstance.userEnrollment('alberto', 'xd', { from: this.state.account })
+  console.log(this.state.username)
+  console.log(this.state.password)
+  this.simpleStorageInstance.userEnrollment(this.state.username, this.state.password, { from: this.state.account }).then((result) => {
+    console.log(result);
+  }).catch(function(err) {
+    console.log(err.message);
+  });
+  console.log(this.state.account)
 }
 
   onLogin(event) {
     event.preventDefault()
-    this.simpleStorageInstance.userEnrollment('alberto', 'xd', { from: this.state.account })
     console.log(this.state.account)
-    this.simpleStorageInstance.login(this.state.password, { from: this.state.account }).then((result) => {
+    this.simpleStorageInstance.login('xd', { from: this.state.account }).then((result) => {
       console.log(result); 
       this.setState({ logged: true}) 
     }).catch(function(err) {
@@ -146,6 +161,7 @@ onEnrollment(event) {
   handlePasswordChange(event) {
     this.setState({password: event.target.value})
   }
+
   /*ALBERTO'S LOGIN
   onLogin(event) {
     event.preventDefault()
@@ -181,7 +197,7 @@ handleLogin: function() {
     if (this.state.logged) {
         return (
         
-       <div className="App">
+      <div className="App">
     
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
           <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">EZShare</a>
@@ -200,64 +216,53 @@ handleLogin: function() {
     
       <div className="container-fluid">
         <div className="row">
+        <HashRouter>
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+            
             <div className="sidebar-sticky">
             
-              <ul className="nav flex-column">
-              <li className="nav-item">
-                  <a className="nav-link active" href="#">
-                    <form onSubmit={this.onSubmit} >
-                      <div className="form-group">
-                      <label for="exampleInputFile"> File input</label>
-                      <input type="file" className="form-control-file" id="exampleInputFile" onChange={this.captureFile} aria-describedby="fileHelp"/>
-                      </div>
-                      <button className="btn btn-dark btn-sm">+ Upload</button>
-                    </form>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link active" href="#">
-                    <span data-feather="home"></span>
-                    My Files <span className="sr-only">(current)</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    <span data-feather="file"></span>
-                    People
-                  </a>
-                </li>
-              </ul>
+              <ul className="header">
+              <li><NavLink to="/Home">Home</NavLink></li>
+              <li><NavLink to="/MyFiles">My Files</NavLink> </li>
+              <li><NavLink to="/UploadFiles">Upload Files</NavLink> </li>
+              </ul> 
             </div>
-          </nav>
+            
+          </nav></HashRouter>
+          <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
+              <HashRouter>
+              <div className="content">
+              <Route path="/Home" component={Home}/>
+              <Route path="/MyFiles" component={MyFiles}/>
+              <Route path="/UploadFiles" component={UploadFiles}/>
+              
+            </div>
+            </HashRouter>
+          </main>
+          
           </div>
         </div>
         </div>
+       
           );
     }
 
     else {
         return (
             <div className="App">
-            <form className="form-signin" onSubmit={this.onLogin}>
+            <form onSubmit={this.onLogin}>
              <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-             <label for="inputUsername" className="sr-only">Username</label>
-             <input type="username" id="inputUsername" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange} required="" autofocus=""/>
-             <label for="inputPassword" className="sr-only">Password</label>
-             <input type="password" id="inputPassword" className="form-control" placeholder="Password"  value={this.state.password} onChange={this.handlePasswordChange} required=""/>
+             <label htmlFor="inputUsername" className="sr-only">Username</label>
+             <input type="text" id="inputUsername" className="form-control" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange} required="" autoFocus=""/>
+             <label htmlFor="inputPassword" className="sr-only">Password</label>
+             <input type="password" id="inputPassword" className="form-control" placeholder="password"  value={this.state.password} onChange={this.handlePasswordChange} required=""/>
              <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
              <p className="mt-5 mb-3 text-muted"/>
            </form>
+           <form onSubmit={this.onEnrollment}>
+            <button className="btn btn-lg btn-primary btn-block" type="submit">Enroll me</button>
+           </form>
            
-           {/* <form onSubmit={this.onEnrollment}> 
-           <h1 className="h3 mb-3 font-weight-normal">Create a new user </h1>
-             <label for="newUsername" className="sr-only">Username</label>
-             <input type="text" id="newUsername" className="form-control" placeholder="Username" required="" autofocus=""/>
-             <label for="newPassword" className="sr-only">Password</label>
-             <input type="password" id="newPassword" className="form-control" placeholder="Password" required=""/>
-             <button className="btn btn-lg btn-primary btn-block" type="submit">Enroll me</button>
-             <p className="mt-5 mb-3 text-muted"/>
-           </form> */}
            
            </div>
         
