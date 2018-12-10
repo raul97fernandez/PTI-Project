@@ -23,7 +23,7 @@ class App extends Component {
 
     this.state = {
         logged: true,
-        username: 'Username',
+        username: '',
         password: '',
         ipfsHash: '',
         web3: null,
@@ -144,7 +144,7 @@ onEnrollment(event) {
   onLogin(event) {
     event.preventDefault()
     console.log(this.state.account)
-    this.simpleStorageInstance.login('xd', { from: this.state.account }).then((result) => {
+    this.simpleStorageInstance.login(this.state.password, { from: this.state.account }).then((result) => {
       console.log(result); 
       this.setState({ logged: true}) 
     }).catch(function(err) {
