@@ -19,7 +19,7 @@ class MyFiles extends Component {
             listItems: null
         }
 
-        this.filesList = this.filesList.bind(this);
+        
       
       }
     
@@ -62,7 +62,7 @@ class MyFiles extends Component {
                     this.setState({
                         files: result.split('/')
                     })
-                    //console.log(this.state.files); 
+                    console.log(this.state.files); 
                 })
                 
                 // Get the value from the contract to prove it worked.
@@ -74,14 +74,7 @@ class MyFiles extends Component {
             })
         }
 
-        filesList() {
-            const listItems = this.state.files.map((file) =>
-              <li>{file}</li>
-            );
-            return (
-              <ul>{listItems}</ul>
-            );
-          }
+
     
 
 
@@ -91,14 +84,9 @@ class MyFiles extends Component {
             <div>
             <h1>My Files</h1>
             <p>This is the first version of the decentralized aplication for using IPFS and Blockchain to update files.</p>
-
             <ul>
-                <li><a href="https://ipfs.io/ipfs/QmNT57eQhqaLRmEhE19WySdfFNkxu9o1FQmwNYtfUSD9bL">QmNT57eQhqaLRmEhE19WySdfFNkxu9o1FQmwNYtfUSD9bL</a></li>
-                <li><a href="https://ipfs.io/ipfs/QmNU1SqBh8cZJ3jrfQpQFb2GRKoxAAyhTiCxmZNzxspPtS">QmNU1SqBh8cZJ3jrfQpQFb2GRKoxAAyhTiCxmZNzxspPtS</a></li>
-                <li><a href="https://ipfs.io/ipfs/QmVNt21siYcsUTm9iqAkAirig2VJvZtsHzPX1gGtNXj7EG">QmVNt21siYcsUTm9iqAkAirig2VJvZtsHzPX1gGtNXj7EG</a></li>
-                <li><a href="https://ipfs.io/ipfs/QmTjp8oxHz5ZFjRd2HRTYYpTrde9ajNXcVLMrH4oKG7K56">QmTjp8oxHz5ZFjRd2HRTYYpTrde9ajNXcVLMrH4oKG7K56</a></li>
+                {this.state.files.map(file => (<li key={file.toString()}><a href={'https://ipfs.io/ipfs/'+file}>{file}</a></li>))}
             </ul>
-
             </div>
         );
     }
