@@ -176,7 +176,7 @@ class App extends Component {
                 <h1>Your File</h1>
                 <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
 
-                <img src={`https://ipfs.io/ipfs/${this.state.ipfsHash}`} alt=""/>
+                <img src={`https://ipfs.infura.io/ipfs/${this.state.ipfsHash}`} alt=""/>
                 <h2>Upload File</h2>
 
                 <form onSubmit={this.onSubmit} >
